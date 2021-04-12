@@ -25,6 +25,22 @@ Make sure `pipenv` is installed then run (in `alternative-api`):
 pipenv install
 ```
 
+**OR**
+
+Run the API using docker:
+
+1 - Build the docker image
+
+```bash
+docker build -t alternative-api .
+```
+
+2 - Run the docker image
+
+```bash
+docker run -p 5000:5000 alternative-api
+```
+
 ## Dev Run
 
 Start the api (in `alternative-api`):
