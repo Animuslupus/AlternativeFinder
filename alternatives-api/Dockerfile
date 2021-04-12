@@ -7,8 +7,10 @@ RUN pip install pipenv
 COPY Pipfile* ./
 RUN pipenv install
 
-COPY ./* .
+COPY . ./
+COPY ./templates ./
+COPY ./static ./
 
-EXPOSE 4000
+EXPOSE 5000
 
-CMD ["pipenv", "run", "gunicorn", "-b 0.0.0.0:4000", "api:app"]
+CMD ["pipenv", "run", "gunicorn", "-b 0.0.0.0:5000", "app:app"]
