@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Message, TextArea } from 'semantic-ui-react'
+import uiConfig from './config';
 
 const rankings = [
     { key: '1', text: '1', value: 1 },
@@ -41,8 +42,9 @@ class AlternativeForm extends React.Component {
                 ranking: this.state.ranking
             })
         };
-        fetch('http://127.0.0.1:5000/alternative', requestOptions).then((r) => {
-            if (r.status != 200) {
+        const ip = uiConfig.isDev ? uiConfig.devApiIp : uiConfig.productionApiIp;
+        fetch(ip + '/alternative', requestOptions).then((r) => {
+            if (r.status !== 200) {
                 r.json().then(
                     (value) => {
                         this.setState({ submitted: true, submissionError: true, statusMessage: value['message'] })

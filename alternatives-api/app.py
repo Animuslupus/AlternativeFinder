@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 import sqlite3
 from flask import g
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 DB_NAME = './product_data.db'
 
@@ -45,6 +45,7 @@ def close_connection(exception):
         db.close()
 
 
+@cross_origin(headers=['Content-Type',]) # Send Access-Control-Allow-Headers 
 @app.route('/products')
 def get_products():
     data = query_db('select * from products')
@@ -67,6 +68,7 @@ def get_products():
     return jsonify(data)
 
 
+@cross_origin(headers=['Content-Type',]) # Send Access-Control-Allow-Headers 
 @app.route('/alternative', methods=['POST'])
 def add_alternative():
     data = request.get_json()
@@ -82,6 +84,6 @@ def add_alternative():
     return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
 
-@ app.route('/')
+@app.route('/')
 def website():
     return render_template("index.html")

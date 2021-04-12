@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Header, GridColumn, Divider, Form, TextArea, Message, Button, Sticky, creat, Rail, Ref } from 'semantic-ui-react'
+import { Container, Grid, Header, Sticky, Checkbox, Ref } from 'semantic-ui-react'
 import AlternativeForm from './AlternativeForm';
 import GridProductView from './GridProductView';
 
@@ -11,7 +11,7 @@ class App extends React.Component {
       product: null,
       alternative: null,
       rank: 0,
-
+      language: 'English'
     };
   }
 
@@ -27,27 +27,31 @@ class App extends React.Component {
     })
   }
 
-  handleFormChange(e, value) {
-    console.log(value)
-  }
-
   clearSelection = () => {
   }
 
   contextRef = React.createRef()
 
+  handleLanguageSwitch = (e,d)=>{
+    if (d['checked'])
+      this.setState({language:'German'})
+    else
+      this.setState({language:'English'})
+  }
+
   render() {
     return (
       <Container textAlign="center" style={{ marginTop: '1em', paddingLeft: '10em', paddingRight: '10em' }} fluid>
         <Header as="h1" >Find Alternative To - Alternative Form</Header>
-        <p style={{ marginBottom: '2em' }}>Tipp: You can use the search-bar to search for product-categories</p>
+        <p style={{ marginBottom: '20px' }}>Tipp: You can use the search-bar to search for product-categories</p>
+        <Checkbox style={{ marginBottom: '2em' }} toggle onChange={this.handleLanguageSwitch} label="Make Form German"/>
         <Ref innerRef={this.contextRef}>
           <Grid columns={3}>
             <Grid.Column style={{ borderRight: "1px solid rgb(212, 212, 212)" }}>
-              <GridProductView callback={(product) => this.selectProduct(product)} heading="Product" />
+              <GridProductView callback={(product) => this.selectProduct(product)} heading="Product" productLanguage={this.state.language}/>
             </Grid.Column>
             <Grid.Column style={{ borderRight: "1px solid rgb(212, 212, 212)" }}>
-              <GridProductView callback={(product) => this.selectAlternative(product)} heading="Alternative" />
+              <GridProductView callback={(product) => this.selectAlternative(product)} heading="Alternative" productLanguage={this.state.language}/>
             </Grid.Column>
             <Grid.Column>
               <Sticky context={this.contextRef} >

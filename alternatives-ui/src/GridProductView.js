@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Grid, Loader, Segment, Container, Image, Search, Header, List, Icon, Popup } from "semantic-ui-react";
-
+import { Card, Grid, Loader, Segment, Container, Image, Search, Header, List } from "semantic-ui-react";
+import uiConfig from './config';
 
 class GridProductView extends React.Component {
     constructor(props) {
@@ -17,7 +17,8 @@ class GridProductView extends React.Component {
     }
 
     queryData = () => {
-        fetch("http://127.0.0.1:5000/products")
+        const ip = uiConfig.isDev ? uiConfig.devApiIp : uiConfig.productionApiIp;
+        fetch(ip + "/products")
             .then(response => response.json())
             .then(
                 // handle the result
@@ -47,7 +48,7 @@ class GridProductView extends React.Component {
             if (this.state.searchQuery.length < 1) return this.setState({ productsFiltered: this.state.products })
 
             const re = new RegExp(this.state.searchQuery, 'i')
-            const isMatch = (value) => re.test(value['nameGerman']) || re.test(value['category'])
+            const isMatch = (value) => re.test(value['name' + this.props.productLanguage]) || re.test(value['category' + this.props.productLanguage])
 
             const filteredProducts = this.state.products.filter(isMatch)
             this.setState({
@@ -57,8 +58,6 @@ class GridProductView extends React.Component {
     }
 
     onCardClick = (product) => {
-        console.log(product)
-        console.log(this.state.products.find(v=>v['id'] == product['id']))
         this.props.callback(product)
         this.setState({ selectedProduct: product['id'] })
     }
@@ -77,7 +76,7 @@ class GridProductView extends React.Component {
                     <Search
                         style={{ marginBottom: '1em' }}
                         showNoResults={false}
-                        resultRenderer={() => { }}
+                        resultRenderer={() => {}}
                         /*onResultSelect={(e, data) =>
                             dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
                         }*/
@@ -92,19 +91,18 @@ class GridProductView extends React.Component {
                                 <Grid.Column key={product['id']}>
                                     <Card
                                         onClick={() => { this.onCardClick(product) }}
-                                        //style={this.state.selectedProduct == product['product'] ? { backgroundColor: 'lightgrey' } : {}}
-                                        color={this.state.selectedProduct == product['id'] ? "green" : "grey"}
+                                        color={this.state.selectedProduct === product['id'] ? "green" : "grey"}
                                     >
                                         <Image src={product['imageLink']} style={{ maxHeight: '150px' }} centered />
                                         <Card.Content>
-                                            <Card.Description style={{ fontWeight: 'bold' }}>{product['nameGerman']}</Card.Description>
-                                            <Card.Meta>Category: {product['category']}</Card.Meta>
+                                            <Card.Description style={{ fontWeight: 'bold' }}>{product['name' + this.props.productLanguage]}</Card.Description>
+                                            <Card.Meta>Category: {product['category' + this.props.productLanguage]}</Card.Meta>
                                             <Card.Description>Emissions: {product['emissions']}</Card.Description>
                                         </Card.Content>
                                         <Card.Content extra>
                                             <List>
                                                 {product['alternatives'].map(product => (
-                                                    <List.Item key={product['id']}>{product['nameGerman']}</List.Item>
+                                                    <List.Item key={product['id']}>{product['name' + this.props.productLanguage]}</List.Item>
                                                 ))}
                                             </List>
                                         </Card.Content>
