@@ -1,16 +1,14 @@
 import React from 'react';
 
 
-import logo from './logo.svg';
-import './App.css';
 import {Container} from 'semantic-ui-react'
 
-import SearchBar from "./SearchBar";
+import SearchBar from "./Components/SearchBar";
 
 import 'semantic-ui-css/semantic.min.css'
 
-import AlternativeList from "./AlternativeList";
-import AlternativeDetails from "./AlternativeDetails";
+import AlternativeList from "./Components/AlternativeList";
+import AlternativeDetails from "./Components/AlternativeDetails";
 
 class App extends React.Component {
 
@@ -42,7 +40,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
+            <div>
                 <Container textAlign="center" style={{marginTop: '1em', paddingLeft: '10em', paddingRight: '10em'}}
                            fluid>
 
