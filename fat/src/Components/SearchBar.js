@@ -1,13 +1,15 @@
 import React from 'react';
 
+import {Container} from 'semantic-ui-react'
+
 
 class SearchBar extends React.Component {
 
     render() {
         return (
-            <div>
+            <Container>
                 Here is the product search
-            </div>
+            </Container>
         )
     }
 }

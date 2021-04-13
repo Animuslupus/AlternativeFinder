@@ -2,12 +2,13 @@ import React from 'react';
 
 
 import {Container} from 'semantic-ui-react'
-
-import SearchBar from "./Components/SearchBar";
+import { Trans } from 'react-i18next';
 
 import 'semantic-ui-css/semantic.min.css'
 
+
 import AlternativeList from "./Components/AlternativeList";
+import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
 
 class App extends React.Component {
@@ -22,18 +23,15 @@ class App extends React.Component {
     getOverviewOrDetails() {
         if (this.state.detailsSelected) {
             return (
-                <div>
-                    Details
                 <AlternativeDetails/>
-                </div>
+
             )
         } else
             return (
-                <div>
-                    List
+                <Container>
                     <SearchBar/>
                     <AlternativeList/>
-                </div>
+                </Container>
             )
     };
 
@@ -46,7 +44,9 @@ class App extends React.Component {
 
                     <header>
                         <p>
-                            Some BlaBla as introduction. Multilanguage.
+                            <Trans >
+                                Welcome
+                            </Trans>
                         </p>
                     </header>
                     <body>
