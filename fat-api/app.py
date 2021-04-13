@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request, redirect, make_respo
 import sqlite3
 from flask import g
 from flask_cors import CORS, cross_origin
+import datetime
 
 DB_NAME = './product_data.db'
 
@@ -71,7 +72,7 @@ def get_products():
 @app.route('/<lang>/<user_id>')
 def handle_userId(lang, user_id):
     resp = make_response(redirect(url_for('serve_website', lang=lang)))
-    resp.set_cookie("userId", user_id)
+    resp.set_cookie("userId", user_id, expires=datetime.datetime.now() + datetime.timedelta(days=30))
     return resp
 
 
