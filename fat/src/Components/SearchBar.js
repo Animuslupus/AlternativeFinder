@@ -38,6 +38,11 @@ class SearchBar extends React.Component {
 
     };
 
+    resultRenderer = (x) => {
+        return(
+            <Label>{x.nameGerman}</Label>
+        )
+    };
 
     render() {
         return (
@@ -45,13 +50,14 @@ class SearchBar extends React.Component {
                 <Grid>
                     <Grid.Column width={6}>
                         <Search
-                            loading={this.loading}
+                            loading={this.state.loading}
                             onResultSelect={(e, data) =>
-                                console.log(data)
+                            {this.props.onProductSelection(data.result)}
                             }
+                            resultRenderer={this.resultRenderer}
                             onSearchChange={this.handleSearchChange}
-                            results={this.results}
-                            value={this.value}
+                            results={this.state.results}
+                            value={this.state.value}
                         />
                     </Grid.Column>
                 </Grid> </Container>

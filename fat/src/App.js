@@ -30,21 +30,10 @@ class App extends React.Component {
 
     loadProducts() {
         fetchProducts().then((result)=>{
-            var prodList=[];
-            for (var x in result){
-
-                var y ={
-                    ...result[x],
-                    title:result[x].nameGerman
-                }
-                prodList.push(y)
-            }
-
             this.setState({
-                products: prodList
+                products: result
             });
 
-            console.log(prodList)
         })
     }
 
@@ -65,6 +54,7 @@ class App extends React.Component {
                 <Container>
                     <SearchBar
                         products={this.state.products}
+                        onProductSelection={(product)=>{console.log(product)}}
                     />
                     <AlternativeList/>
                 </Container>
