@@ -10,6 +10,7 @@
     "i18next": "^20.2.1",
     "public-ip": "^4.0.3",
     "react": "^17.0.2",
+    "react-cookies": "^0.1.1",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.8.13",
     "react-scripts": "4.0.3",
