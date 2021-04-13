@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect
+from flask import Flask, jsonify, render_template, request, redirect, make_response, url_for
 import sqlite3
 from flask import g
 from flask_cors import CORS, cross_origin
@@ -45,20 +45,20 @@ def close_connection(exception):
         db.close()
 
 
-@cross_origin(headers=['Content-Type',]) # Send Access-Control-Allow-Headers 
+@cross_origin(headers=['Content-Type', ])  # Send Access-Control-Allow-Headers
 @app.route('/products')
 def get_products():
     data = query_db('select * from products')
     alternatives = query_db(
         'SELECT * FROM Products JOIN Alternatives on (Products.id = Alternatives.alternativeId);')
-    
+
     alternatives_lookup = {}
     for a in alternatives:
         if a['productId'] in alternatives_lookup:
             alternatives_lookup[a['productId']].append(a)
         else:
             alternatives_lookup[a['productId']] = [a]
-    
+
     for product in data:
         if product['id'] in alternatives_lookup:
             product['alternatives'] = alternatives_lookup[product['id']]
@@ -67,10 +67,19 @@ def get_products():
 
     return jsonify(data)
 
+
 @app.route('/<lang>/<user_id>')
-def website(lang, user_id):
+def handle_userId(lang, user_id):
+    resp = make_response(redirect(url_for('serve_website', lang=lang)))
+    resp.set_cookie("userId", user_id)
+    return resp
+
+
+@app.route('/<lang>')
+def serve_website(lang):
     return render_template("index.html")
 
+
 @app.route('/')
-def redirect():
-    return redirect(url_for('/en'))
+def redirect_to_default_lang():
+    return redirect(url_for('serve_website', lang='en'))
