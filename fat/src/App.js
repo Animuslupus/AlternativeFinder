@@ -3,6 +3,7 @@ import React from 'react';
 
 import {Container} from 'semantic-ui-react'
 import { Trans } from 'react-i18next';
+import i18n from './i18n';
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -18,6 +19,12 @@ class App extends React.Component {
         this.state = {
             detailsSelected: false
         }
+    }
+
+    //change lng of internatinalization package
+    //'en' or 'de' are the implemented languages
+    changeLanguage(lng){
+        i18n.changeLanguage(lng);
     }
 
     getOverviewOrDetails() {
