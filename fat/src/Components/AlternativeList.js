@@ -1,13 +1,14 @@
 import React from 'react';
+import { Grid } from 'semantic-ui-react';
 
 
 class AlternativeList extends React.Component {
 
     render() {
         return (
-            <div>
-                Here is a list of alternatives
-            </div>
+            <Grid stackable>
+                
+            </Grid>
         )
     }
 }

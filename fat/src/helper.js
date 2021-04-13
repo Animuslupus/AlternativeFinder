@@ -1,4 +1,4 @@
-import appConfig from './config'
+import {appConfig, eventDB, firebase} from './config'
 
 async function fetchProducts (){
     const ip = appConfig.isDev ? appConfig.devApiIp : appConfig.productionApiIp;
@@ -7,4 +7,13 @@ async function fetchProducts (){
     return result
 }
 
-export default fetchProducts;
+function pushEvent(eventType, userId, params={}){
+    eventDB.collection("FATEvents").add({
+        type:eventType,
+        userId:userId,
+        createdAt: firebase.firestore.Timestamp.now(),
+        params: params
+    })
+}
+
+export {fetchProducts, pushEvent};

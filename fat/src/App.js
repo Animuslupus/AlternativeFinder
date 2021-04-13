@@ -11,6 +11,7 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
+import {pushEvent} from './helper';
 
 class App extends React.Component {
 
@@ -41,6 +42,14 @@ class App extends React.Component {
                 </Container>
             )
     };
+
+    componentDidMount(){
+        pushEvent('UserJoin', '')
+    }
+
+    componentWillUnmount(){
+        pushEvent('UserLeave', '')
+    }
 
 
     render() {
