@@ -11,15 +11,41 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
-import {pushEvent} from './helper';
+import {pushEvent, fetchProducts} from './helper';
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            detailsSelected: false
-        }
+            detailsSelected: false,
+            products:[],
+            loading:false,
+        };
+
+
+    }
+
+
+
+    loadProducts() {
+        fetchProducts().then((result)=>{
+            var prodList=[];
+            for (var x in result){
+
+                var y ={
+                    ...result[x],
+                    title:result[x].nameGerman
+                }
+                prodList.push(y)
+            }
+
+            this.setState({
+                products: prodList
+            });
+
+            console.log(prodList)
+        })
     }
 
     //change lng of internatinalization package
@@ -37,24 +63,27 @@ class App extends React.Component {
         } else
             return (
                 <Container>
-                    <SearchBar/>
+                    <SearchBar
+                        products={this.state.products}
+                    />
                     <AlternativeList/>
                 </Container>
             )
     };
 
     componentDidMount(){
-        pushEvent('UserJoin', '')
+        pushEvent('UserJoin', '');
+
+        this.loadProducts();
     }
+
 
     componentWillUnmount(){
         pushEvent('UserLeave', '')
     }
 
-
     render() {
         return (
-            <div>
                 <Container textAlign="center" style={{marginTop: '1em', paddingLeft: '10em', paddingRight: '10em'}}
                            fluid>
 
@@ -65,16 +94,13 @@ class App extends React.Component {
                             </Trans>
                         </p>
                     </header>
-                    <body>
 
                     {this.getOverviewOrDetails()}
 
 
-                    </body>
 
 
                 </Container>
-            </div>
         )
     }
 }
