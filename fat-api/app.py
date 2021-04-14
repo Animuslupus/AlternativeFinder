@@ -68,6 +68,27 @@ def get_products():
 
     return jsonify(data)
 
+@cross_origin(headers=['Content-Type', ])  # Send Access-Control-Allow-Headers
+@app.route('/altproducts')
+def get_products_with_alternatives():
+    data = query_db('select * from products')
+    alternatives = query_db(
+        'SELECT * FROM Products JOIN Alternatives on (Products.id = Alternatives.alternativeId);')
+
+    alternatives_lookup = {}
+    for a in alternatives:
+        if a['productId'] in alternatives_lookup:
+            alternatives_lookup[a['productId']].append(a)
+        else:
+            alternatives_lookup[a['productId']] = [a]
+
+    res = []
+    for product in data:
+        if product['id'] in alternatives_lookup:
+            product['alternatives'] = alternatives_lookup[product['id']]
+            res.append(product)
+
+    return jsonify(res)
 
 @app.route('/<lang>/<user_id>')
 def handle_userId(lang, user_id):
