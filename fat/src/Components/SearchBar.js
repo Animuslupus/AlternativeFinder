@@ -53,7 +53,7 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <Container style={{backgroundColor: '#1a531b', margin: '2em', padding: '2em'}}>
+            <Container style={{ margin: '2em', padding: '2em'}}>
 
                 <Search
                     loading={this.state.loading}
