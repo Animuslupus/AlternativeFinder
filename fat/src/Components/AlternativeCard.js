@@ -1,40 +1,46 @@
 import React from 'react'
-import { Card, Divider, Grid, Image } from 'semantic-ui-react'
+import { Card, Divider, Grid, Icon, Image } from 'semantic-ui-react'
 
 class AlternativeCard extends React.Component {
+
+    //this.props.product
+    //this.props.alternative
+
+    //TODO: fix percentages
+    //TODO: fix dividers
+    //TODO: fix language
+
     render() {
+        const betterInPercentage = Math.round(((this.props.alternative['emissions'] - this.props.product['emissions']) / this.props.product['emissions']) * 100)
         return (
             <Card>
                 <Card style={{ marginBottom: '0' }}>
                     <Card.Content>
-                        <Grid columns={2}>
+                        <Grid columns={3} verticalAlign='middle'>
                             <Grid.Column>
                                 <Image
                                     size='mini'
-                                    src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+                                    src={this.props.product['imageLink']}
                                 />
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Icon name="arrow right" />
                             </Grid.Column>
                             <Grid.Column>
                                 <Image
                                     size='mini'
-                                    src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+                                    src={this.props.alternative['imageLink']}
                                 />
                             </Grid.Column>
                         </Grid>
-                        <Divider vertical>OR</Divider>
                     </Card.Content>
                 </Card>
                 <Card.Content style={{ borderTop: 0, }}>
-                    <Card.Header>Tofu</Card.Header>
-                    <Card.Meta>alternative to Bacon </Card.Meta>
-                    <Card.Description>
-                        klkfslsafdlkasdjv aldkflafdj afd
-                        dsfklkafdkjl asdfkjafdsdslkaflkdsfdkjlsdfjklfsakafdk
-                    </Card.Description>
-
+                    <Card.Header>{this.props.alternative['name']}</Card.Header>
+                    <Card.Meta>alternative to {this.props.product['name']}</Card.Meta>
                 </Card.Content>
                 <Card.Content extra textAlign="center">
-                    x% better
+                    {betterInPercentage}% better
                 </Card.Content>
             </Card>
         );
