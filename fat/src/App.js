@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import {Container} from 'semantic-ui-react'
+import {Container, Button} from 'semantic-ui-react'
 import {Trans} from 'react-i18next';
 import i18n from './i18n';
 
@@ -18,9 +18,10 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: [],
+            products: undefined,
             loading: false,
-            language: 'en'
+            language: 'en',
+            modalIsOpen: false
         };
         window.addEventListener("beforeunload", (e) => {
             pushEvent('UserLeave')
@@ -41,9 +42,9 @@ class App extends React.Component {
     //change lng of internatinalization package
     //'en' or 'de' are the implemented languages
     changeLanguage(lng) {
-        if((lng !== 'en') && (lng !== 'de')){
-            console.log("Unknown language parameter: "+lng);
-            lng='en'
+        if ((lng !== 'en') && (lng !== 'de')) {
+            console.log("Unknown language parameter: " + lng);
+            lng = 'en'
         }
 
         i18n.changeLanguage(lng).then(
@@ -55,24 +56,6 @@ class App extends React.Component {
         });
     }
 
-    getOverviewOrDetails() {
-        if (this.state.detailsSelected) {
-            return (
-                <AlternativeDetails/>
-
-            )
-        } else
-            return (
-                <Container>
-                    <SearchBar
-                        products={this.state.products}
-                        onProductSelection={(product)=> console.log(product)}
-                    />
-                    <AlternativeList/>
-                </Container>
-            )
-    };
-
     componentDidMount() {
         pushEvent('UserJoin');
 
@@ -80,23 +63,49 @@ class App extends React.Component {
     }
 
     render() {
-        return (
-            <Container textAlign="center" style={{marginTop: '1em', paddingLeft: '10em', paddingRight: '10em'}}
-                       fluid>
+        if (!this.state.products)
+            return (
+                <Container>
+                    LOADING SCREEN
+                </Container>
+            );
+        else
+            return (
+                <Container textAlign="center" style={{marginTop: '1em', paddingLeft: '10em', paddingRight: '10em'}}
+                           fluid>
 
-                <header>
-                    <p>
-                        <Trans>
-                            Welcome
-                        </Trans>
-                    </p>
-                </header>
+                    <header>
+                        <p>
+                            <Trans>
+                                Welcome
+                            </Trans>
+                        </p>
+                    </header>
+                    <Container>
+                        <SearchBar
+                            products={this.state.products}
+                            onProductSelection={(product) => console.log(product)}
+                        />
+                        <AlternativeList/>
+                    </Container>
 
-                {this.getOverviewOrDetails()}
+                    <Button onClick={() => {
+                        this.setState({
+                            modalIsOpen: true
+                        });
+                    }}>
+                        Open/Close Modal
+                    </Button>
+
+                    <AlternativeDetails
+                        isOpen={this.state.modalIsOpen}
+                        alternative={this.state.products[98].alternatives[0]}
+                        product={this.state.products[98]}
+                    />
 
 
-            </Container>
-        )
+                </Container>
+            )
     }
 }
 
