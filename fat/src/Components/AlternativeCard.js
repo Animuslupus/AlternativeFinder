@@ -1,4 +1,5 @@
 import React from 'react'
+import { Trans } from 'react-i18next';
 import { Card, Grid, Icon, Image } from 'semantic-ui-react'
 import { capitalize } from '../helper';
 
@@ -38,10 +39,10 @@ class AlternativeCard extends React.Component {
                 </Card>
                 <Card.Content style={{ borderTop: 0, }}>
                     <Card.Header>{capitalize(this.props.alternative['name'])}</Card.Header>
-                    <Card.Meta>alternative to {capitalize(this.props.product['name'])}</Card.Meta>
+                    <Card.Meta><Trans>alternative</Trans> {capitalize(this.props.product['name'])}</Card.Meta>
                 </Card.Content>
                 <Card.Content extra textAlign="center">
-                    {betterInPercentage}% better
+                    {betterInPercentage}% <Trans>better</Trans>
                 </Card.Content>
             </Card>
         );

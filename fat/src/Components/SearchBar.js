@@ -1,8 +1,8 @@
 import React from 'react';
 import '../index.css';
 
-
-import {Container, Image, Search, Label} from 'semantic-ui-react'
+import { Container, Image, Search, Label } from 'semantic-ui-react'
+import { pushEvent } from '../helper';
 
 class SearchBar extends React.Component {
 
@@ -11,18 +11,30 @@ class SearchBar extends React.Component {
         this.state = {
             results: [],
             value: '',
+            loading: false,
             products: props.products,
         };
+        this.tmpMaxSearchLength = 0;
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
         this.setState({
             products: nextProps.products,
+            loading: false,
         });
     }
 
-    handleSearchChange = (e, {value}) => {
-        this.setState({value: value, loading: true});
+    handleSearchChange = (e, { value }) => {
+        if (value.length == this.tmpMaxSearchLength - 1)
+            pushEvent('FailedSearch', {
+                searchQuery: value
+            });
+        else if (value.length > this.tmpMaxSearchLength)
+            this.tmpMaxSearchLength = value.length
+        else if (value.length == 0)
+            this.tmpMaxSearchLength = 0
+
+        this.setState({ value: value, loading: true });
         setTimeout(() => {
 
             const re = new RegExp(this.state.value, 'i');
@@ -32,6 +44,7 @@ class SearchBar extends React.Component {
 
             this.setState({
                 results: filteredProducts,
+                loading: false
             })
         }, 300)
 
@@ -42,7 +55,7 @@ class SearchBar extends React.Component {
             <div>
                 <Label>
                     {x.name}
-                    <img src={x.imageLink}/>
+                    <img src={x.imageLink} />
                 </Label>
             </div>
 
@@ -51,13 +64,13 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <Container style={{ margin: '2em', padding: '2em'}}>
+            <Container style={{ margin: '2em', padding: '2em' }}>
 
                 <Search
-                    loading={false}
+                    loading={this.state.loading}
                     onResultSelect={(e, data) => {
                         this.setState({
-                            value:data.result.name
+                            value: data.result.name
                         });
                         this.props.onProductSelection(data.result)
                     }

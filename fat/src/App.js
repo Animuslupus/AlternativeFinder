@@ -53,19 +53,23 @@ class App extends React.Component {
             this.loadProducts(lng)
         );
 
+        pushEvent('UserJoin', { language: lng });
         this.setState({
             language: lng,
         });
     }
 
     componentDidMount() {
-        pushEvent('UserJoin');
-
         this.changeLanguage(window.location.pathname.substring(1));
         // this.loadProducts();
     }
 
     onCardClick = (product, alternative) => {
+        pushEvent('ViewDetails', {
+            productName: product['name'], productId: product['id'],
+            alternativeName: alternative['name'], alternativeId: alternative['id'],
+            wasRecommended: !this.state.productSelected
+        });
         this.setState({
             modalIsOpen: true,
             productSelected: product,
@@ -74,6 +78,10 @@ class App extends React.Component {
     }
 
     onModalClose = () => {
+        pushEvent('CloseDetails', {
+            productName: this.state.productSelected['name'], productId: this.state.productSelected['id'],
+            alternativeName: this.state.alternativeSelected['name'], alternativeId: this.state.alternativeSelected['id'],
+        });
         this.setState({ modalIsOpen: false })
     }
 
@@ -91,10 +99,17 @@ class App extends React.Component {
         }
     }
 
+    selectProduct = (product) => {
+        pushEvent('searchedProductSelected', {
+            productName: product['name'], productId: product['id'],
+        });
+        this.setState({ productSelected: product })
+    }
+
     render() {
         if (this.state.loading)
             return (<Loader />)
-        else{
+        else {
             return (
                 <Container textAlign="center" >
                     <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', height: 200, marginBottom: '1em' }}>
@@ -103,7 +118,7 @@ class App extends React.Component {
                         </Header>
                         <SearchBar
                             products={this.state.products}
-                            onProductSelection={(product) => { this.setState({ productSelected: product }) }}
+                            onProductSelection={this.selectProduct}
                         />
                     </Container>
                     <AlternativeList

@@ -33,14 +33,17 @@ async function pushEvent(eventType, params = {}) {
     const ip = await publicIp.v4({
         fallbackUrls: ["https://ifconfig.co/ip"]
     })
+    const eventData = {
+        type: eventType,
+        userId: userId ? userId : '',
+        ipAddress: ip,
+        createdAt: firebase.firestore.Timestamp.now(),
+        params: params
+    }
     if (!appConfig.isDev)
-        eventDB.collection("FATEvents").add({
-            type: eventType,
-            userId: userId ? userId : '',
-            ipAddress: ip,
-            createdAt: firebase.firestore.Timestamp.now(),
-            params: params
-        })
+        eventDB.collection("FATEvents").add(eventData)
+    else
+        console.log(eventData)
 }
 
 function shuffle(array) {

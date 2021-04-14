@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal, Container, Image, Divider, Grid, Header, Segment, Icon } from 'semantic-ui-react'
 import MarkdownRenderer from 'react-markdown-renderer'
 import {capitalize} from '../helper'
+import { Trans } from 'react-i18next';
 
 class AlternativeDetails extends React.Component {
 
@@ -71,10 +72,10 @@ class AlternativeDetails extends React.Component {
                             </Divider>
                         </Segment>
                         <Container style={{ paddingBottom: '1em', paddingTop: '1em', backgroundColor: '#1a531b' }} textAlign='center'>
-                            <Header style={{ color: '#fff' }} as='h3'>{betterInPercentage}% more sustainable</Header>
+                            <Header style={{ color: '#fff' }} as='h3'>{betterInPercentage}% <Trans>better</Trans></Header>
                         </Container>
                         <Container style={{ paddingLeft: '20%', paddingRight: '20%', paddingBottom: '2em', paddingTop: '1em' }}>
-                            <Header style={{ color: '#1a531b' }} as='h2'>{capitalize(this.state.product.name)} replaced by {capitalize(this.state.alternative.name)}</Header>
+                            <Header style={{ color: '#1a531b' }} as='h2'>{capitalize(this.state.product.name)} <Trans>replaces</Trans> {capitalize(this.state.alternative.name)}</Header>
                             <p>
                                 <MarkdownRenderer markdown={this.state.alternative.description} />
                             </p>
