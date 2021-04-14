@@ -54,7 +54,8 @@ class AlternativeDetails extends React.Component {
                             <Divider vertical>REPLACED BY</Divider>
                         </Segment>
                     </Container>
-                    <Container style={{paddingLeft: '20%', paddingRight: '20%', paddingBottom: '2em', paddingTop: '1em'}}>
+                    <Container
+                        style={{paddingLeft: '20%', paddingRight: '20%', paddingBottom: '2em', paddingTop: '1em'}}>
                         <Header as='h2'>{this.state.product.name} replaced by {this.state.alternative.name}</Header>
                         <p>
                             {this.state.alternative.description}
@@ -62,18 +63,22 @@ class AlternativeDetails extends React.Component {
                     </Container>
                     <Divider>
                     </Divider>
-                    <Container textAlign="center" >
+                    <Container textAlign="center">
                         <Header as='h3'>Absolute Impact</Header>
-                        <Segment >
+                        <Segment>
                             <Grid columns={2}>
                                 <Grid.Column>
-                                    <Card style={{margin: 'auto'}}>
-                                        {this.state.product.emissions}
+                                    <Card style={{margin: 'auto', padding: '2em', backgroundColor:'#FF5151'}}>
+                                        <b>
+                                            {this.state.product.emissions}
+                                        </b>
                                     </Card>
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <Card style={{margin: 'auto'}}>
-                                        {this.state.alternative.emissions}
+                                    <Card style={{margin: 'auto', padding: '2em', backgroundColor:'#F2EC64'}}>
+                                        <b>
+                                            {this.state.alternative.emissions}
+                                        </b>
                                     </Card>
                                 </Grid.Column>
                             </Grid>
