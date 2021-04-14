@@ -2,7 +2,7 @@ import firebase from 'firebase';
 
 const appConfig = {
     devApiIp: "http://127.0.0.1:4000",
-    productionApiIp: "alternatives.climateers.app",
+    productionApiIp: "https://alternatives.climateers.app",
     isDev: false 
 }
 
