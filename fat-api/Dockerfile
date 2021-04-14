@@ -11,6 +11,6 @@ COPY . ./
 COPY ./templates ./
 COPY ./static ./
 
-EXPOSE 5000
+EXPOSE 4000
 
-CMD ["pipenv", "run", "gunicorn", "-b 0.0.0.0:5000", "app:app"]
+CMD ["pipenv", "run", "gunicorn", "-b", "0.0.0.0:4000", "app:app"]

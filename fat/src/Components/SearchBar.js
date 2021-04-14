@@ -15,6 +15,7 @@ class SearchBar extends React.Component {
             products: props.products,
         };
         this.tmpMaxSearchLength = 0;
+        this.searchSuccessful = false
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -25,14 +26,16 @@ class SearchBar extends React.Component {
     }
 
     handleSearchChange = (e, { value }) => {
-        if (value.length == this.tmpMaxSearchLength - 1)
+        if (value.length == this.tmpMaxSearchLength - 1 && !this.searchSuccessful)
             pushEvent('FailedSearch', {
                 searchQuery: value
             });
         else if (value.length > this.tmpMaxSearchLength)
             this.tmpMaxSearchLength = value.length
-        else if (value.length == 0)
+        else if (value.length == 0){
             this.tmpMaxSearchLength = 0
+            this.searchSuccessful = false
+        }
 
         this.setState({ value: value, loading: true });
         setTimeout(() => {
@@ -69,6 +72,7 @@ class SearchBar extends React.Component {
                 <Search
                     loading={this.state.loading}
                     onResultSelect={(e, data) => {
+                        this.searchSuccessful = true
                         this.setState({
                             value: data.result.name
                         });
