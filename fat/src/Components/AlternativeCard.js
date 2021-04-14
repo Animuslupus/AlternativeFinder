@@ -6,29 +6,27 @@ class AlternativeCard extends React.Component {
     //this.props.product
     //this.props.alternative
 
-    //TODO: fix percentages
-    //TODO: fix dividers
     //TODO: fix language
 
     render() {
-        const betterInPercentage = Math.round(((this.props.alternative['emissions'] - this.props.product['emissions']) / this.props.product['emissions']) * 100)
+        const betterInPercentage = Math.round(((this.props.product['emissions'] - this.props.alternative['emissions']) / this.props.product['emissions']) * 100)
         return (
-            <Card>
+            <Card onClick={() => { this.props.onClick(this.props.product, this.props.alternative) }}>
                 <Card style={{ marginBottom: '0' }}>
                     <Card.Content>
                         <Grid columns={3} verticalAlign='middle'>
                             <Grid.Column>
                                 <Image
-                                    size='mini'
+                                    size='small'
                                     src={this.props.product['imageLink']}
                                 />
                             </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="arrow right" />
+                            <Grid.Column textAlign='center'>
+                                <Icon name="angle double right" size='big' color='black' />
                             </Grid.Column>
                             <Grid.Column>
                                 <Image
-                                    size='mini'
+                                    size='small'
                                     src={this.props.alternative['imageLink']}
                                 />
                             </Grid.Column>
