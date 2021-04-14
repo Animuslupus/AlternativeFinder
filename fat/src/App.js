@@ -18,9 +18,9 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            detailsSelected: false,
             products: [],
             loading: false,
+            language: 'en'
         };
         window.addEventListener("beforeunload", (e) => {
             pushEvent('UserLeave')
@@ -42,18 +42,16 @@ class App extends React.Component {
     //change lng of internatinalization package
     //'en' or 'de' are the implemented languages
     changeLanguage(lng) {
-        switch (lng) {
-            case 'en':
-                i18n.changeLanguage(lng);
-                break;
-            case 'de':
-                i18n.changeLanguage(lng);
-                break;
-            default:
-                console.log("Unknown language parameter: "+lng)
-
+        if((lng !== 'en') && (lng !== 'de')){
+            console.log("Unknown language parameter: "+lng);
+            lng='en'
         }
+
         i18n.changeLanguage(lng);
+
+        this.setState({
+            language: lng
+        });
     }
 
     getOverviewOrDetails() {
