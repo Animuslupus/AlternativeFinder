@@ -27,7 +27,7 @@ class SearchBar extends React.Component {
         setTimeout(() => {
 
             const re = new RegExp(this.state.value, 'i');
-            const isMatch = (value) => re.test(value['nameGerman']) || re.test(value['categoryGerman']);
+            const isMatch = (value) => re.test(value['name']) || re.test(value['category']);
 
             const filteredProducts = this.state.products.filter(isMatch);
 
@@ -43,7 +43,7 @@ class SearchBar extends React.Component {
         return (
             <div>
                 <Label>
-                    {x.nameGerman}
+                    {x.name}
                     <img src={x.imageLink}/>
                 </Label>
             </div>
@@ -59,7 +59,7 @@ class SearchBar extends React.Component {
                     loading={this.state.loading}
                     onResultSelect={(e, data) => {
                         this.setState({
-                            value:data.result.nameGerman
+                            value:data.result.name
                         });
                         this.props.onProductSelection(data.result)
                     }
