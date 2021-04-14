@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import { Container, Header, Loader, Button } from 'semantic-ui-react'
+import { Container, Header, Loader } from 'semantic-ui-react'
 import { Trans } from 'react-i18next';
 import i18n from './i18n';
 
@@ -12,7 +12,6 @@ import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
 import { pushEvent, fetchProducts } from './helper';
-import AlternativeCard from './Components/AlternativeCard';
 
 class App extends React.Component {
 

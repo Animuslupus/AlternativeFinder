@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Divider, Grid, Icon, Image } from 'semantic-ui-react'
+import { Card, Grid, Icon, Image } from 'semantic-ui-react'
 
 class AlternativeCard extends React.Component {
 

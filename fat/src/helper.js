@@ -10,7 +10,7 @@ async function fetchProducts(lng) {
     result = await result.json();
 
 
-    let suf=lng == 'en'? 'English' : 'German';
+    let suf= lng === 'en'? 'English' : 'German';
     let results_mapped = result.map((x)=>{
         return{
             ...x,

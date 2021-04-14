@@ -9,7 +9,6 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
             results: [],
             value: '',
             products: props.products,
@@ -33,7 +32,6 @@ class SearchBar extends React.Component {
 
             this.setState({
                 results: filteredProducts,
-                loading: false
             })
         }, 300)
 
@@ -56,7 +54,7 @@ class SearchBar extends React.Component {
             <Container style={{ margin: '2em', padding: '2em'}}>
 
                 <Search
-                    loading={this.state.loading}
+                    loading={false}
                     onResultSelect={(e, data) => {
                         this.setState({
                             value:data.result.name
