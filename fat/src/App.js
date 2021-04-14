@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-import {Container} from 'semantic-ui-react'
-import {Trans} from 'react-i18next';
+import { Container, Header, Loader } from 'semantic-ui-react'
+import { Trans } from 'react-i18next';
 import i18n from './i18n';
 
 import 'semantic-ui-css/semantic.min.css'
@@ -11,7 +11,8 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
-import {pushEvent, fetchProducts} from './helper';
+import { pushEvent, fetchProducts } from './helper';
+import AlternativeCard from './Components/AlternativeCard';
 
 class App extends React.Component {
 
@@ -19,19 +20,20 @@ class App extends React.Component {
         super(props);
         this.state = {
             products: [],
-            loading: false,
-            language: 'en'
+            loading: true,
+            language: 'en',
+            productSelected: null
         };
         window.addEventListener("beforeunload", (e) => {
             pushEvent('UserLeave')
         });
 
-        this.changeLanguage(window.location.pathname.substring(1));
     }
 
 
     loadProducts(lng) {
         fetchProducts(lng).then((result) => {
+            console.log(result)
             this.setState({
                 products: result
             });
@@ -41,9 +43,9 @@ class App extends React.Component {
     //change lng of internatinalization package
     //'en' or 'de' are the implemented languages
     changeLanguage(lng) {
-        if((lng !== 'en') && (lng !== 'de')){
-            console.log("Unknown language parameter: "+lng);
-            lng='en'
+        if ((lng !== 'en') && (lng !== 'de')) {
+            console.log("Unknown language parameter: " + lng);
+            lng = 'en'
         }
 
         i18n.changeLanguage(lng).then(
@@ -51,52 +53,39 @@ class App extends React.Component {
         );
 
         this.setState({
-            language: lng
+            language: lng,
+            loading: false,
         });
     }
 
-    getOverviewOrDetails() {
-        if (this.state.detailsSelected) {
-            return (
-                <AlternativeDetails/>
-
-            )
-        } else
-            return (
-                <Container>
-                    <SearchBar
-                        products={this.state.products}
-                        onProductSelection={(product)=> console.log(product)}
-                    />
-                    <AlternativeList/>
-                </Container>
-            )
-    };
 
     componentDidMount() {
         pushEvent('UserJoin');
 
+        this.changeLanguage(window.location.pathname.substring(1));
         // this.loadProducts();
     }
 
     render() {
-        return (
-            <Container textAlign="center" style={{marginTop: '1em', paddingLeft: '10em', paddingRight: '10em'}}
-                       fluid>
-
-                <header>
-                    <p>
-                        <Trans>
-                            Welcome
+        if (this.state.loading)
+            return (<Loader />)
+        else
+            return (
+                <Container textAlign="center" >
+                    <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', maxHeight: 200, marginBottom: '1em' }}>
+                        <Header inverted>
+                            <Trans>
+                                Welcome
                         </Trans>
-                    </p>
-                </header>
-
-                {this.getOverviewOrDetails()}
-
-
-            </Container>
-        )
+                        </Header>
+                        <SearchBar
+                            products={this.state.products}
+                            onProductSelection={(product) => { this.setState({ productSelected: product }) }}
+                        />
+                    </Container>
+                    <AlternativeList products={[this.state.products[24]]} />
+                </Container>
+            )
     }
 }
 
