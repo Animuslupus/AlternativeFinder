@@ -6,7 +6,7 @@ const userId = cookie.load('userId');
 
 async function fetchProducts(lng) {
     const ip = appConfig.isDev ? appConfig.devApiIp : appConfig.productionApiIp;
-    let result = await fetch(ip + '/products');
+    let result = await fetch(ip + '/altproducts');
     result = await result.json();
 
 
