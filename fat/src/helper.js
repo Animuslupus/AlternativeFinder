@@ -16,6 +16,13 @@ async function fetchProducts(lng) {
             ...x,
             name: x['name'+suf],
             category: x['category'+suf],
+            alternatives: x['alternatives'].map(alt=>{
+                return({
+                    ...alt,
+                    name: alt['name' + suf],
+                    category: alt['category' + suf],
+                })
+            })
         }
     });
     return results_mapped
