@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import { Container, Header, Loader } from 'semantic-ui-react'
+import { Container, Header, Loader, Button } from 'semantic-ui-react'
 import { Trans } from 'react-i18next';
 import i18n from './i18n';
 
@@ -21,8 +21,9 @@ class App extends React.Component {
         this.state = {
             products: [],
             loading: true,
+            productSelected: null,
             language: 'en',
-            productSelected: null
+            modalIsOpen: false
         };
         window.addEventListener("beforeunload", (e) => {
             pushEvent('UserLeave')
@@ -35,7 +36,8 @@ class App extends React.Component {
         fetchProducts(lng).then((result) => {
             console.log(result)
             this.setState({
-                products: result
+                products: result,
+                loading: false,
             });
         })
     }
@@ -54,10 +56,8 @@ class App extends React.Component {
 
         this.setState({
             language: lng,
-            loading: false,
         });
     }
-
 
     componentDidMount() {
         pushEvent('UserJoin');
@@ -84,6 +84,21 @@ class App extends React.Component {
                         />
                     </Container>
                     <AlternativeList products={[this.state.products[24]]} />
+
+                    <Button onClick={() => {
+                        this.setState({
+                            modalIsOpen: true
+                        });
+                    }}>
+                        Open/Close Modal
+                    </Button>
+
+                    <AlternativeDetails
+                        isOpen={this.state.modalIsOpen}
+                        alternative={this.state.products[98].alternatives[0]}
+                        product={this.state.products[98]}
+                    />
+
                 </Container>
             )
     }
