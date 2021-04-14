@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Modal, Container, Image, Divider, Grid, Header, Segment, Card } from 'semantic-ui-react'
+import MarkdownRenderer from 'react-markdown-renderer'
 
 class AlternativeDetails extends React.Component {
 
@@ -53,7 +54,7 @@ class AlternativeDetails extends React.Component {
                         <Container style={{paddingLeft:'20%', paddingRight:'20%', paddingBottom: '2em', paddingTop: '1em' }}>
                             <Header as='h2'>{this.state.product.name} replaced by {this.state.alternative.name}</Header>
                             <p>
-                                {this.state.alternative.description}
+                                <MarkdownRenderer markdown={this.state.alternative.description} />
                             </p>
                         </Container>
                         <Container textAlign="center">
