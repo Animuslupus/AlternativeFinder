@@ -79,7 +79,8 @@ def add_alternative():
         return jsonify({'success': False, 'message': 'Entry already exists'}), 400, {'ContentType': 'application/json'}
     try:
         exec_db(q)
-    except Exception:
+    except Exception as e:
+        print(e)
         return jsonify({'success': False, 'message': 'Internal Server Error 😱😱😱 - Send a message to Elias'}), 500, {'ContentType': 'application/json'}
     return jsonify({'success': True}), 200, {'ContentType': 'application/json'}
 
