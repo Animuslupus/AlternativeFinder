@@ -22,6 +22,7 @@ class App extends React.Component {
             products: [],
             loading: true,
             productSelected: null,
+            alternativeSelected: null,
             language: 'en',
             modalIsOpen: false
         };
@@ -34,7 +35,6 @@ class App extends React.Component {
 
     loadProducts(lng) {
         fetchProducts(lng).then((result) => {
-            console.log(result)
             this.setState({
                 products: result,
                 loading: false,
@@ -66,13 +66,25 @@ class App extends React.Component {
         // this.loadProducts();
     }
 
+    onCardClick = (product, alternative) => {
+        this.setState({
+            modalIsOpen: true,
+            productSelected: product,
+            alternativeSelected: alternative
+        })
+    }
+
+    onModalClose = () => {
+        this.setState({ modalIsOpen: false })
+    }
+
     render() {
         if (this.state.loading)
             return (<Loader />)
         else
             return (
                 <Container textAlign="center" >
-                    <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', maxHeight: 200, marginBottom: '1em' }}>
+                    <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', height: 200, marginBottom: '1em' }}>
                         <Header inverted>
                             <Trans>
                                 Welcome
@@ -83,21 +95,15 @@ class App extends React.Component {
                             onProductSelection={(product) => { this.setState({ productSelected: product }) }}
                         />
                     </Container>
-                    <AlternativeList products={[this.state.products[24]]} />
-
-                    <Button onClick={() => {
-                        this.setState({
-                            modalIsOpen: true
-                        });
-                    }}>
-                        Open/Close Modal
-                    </Button>
-
-                    <AlternativeDetails
-                        isOpen={this.state.modalIsOpen}
-                        alternative={this.state.products[98].alternatives[0]}
-                        product={this.state.products[98]}
-                    />
+                    <AlternativeList products={[this.state.productSelected]} callback={this.onCardClick} />
+                    {
+                        <AlternativeDetails
+                            onClose={this.onModalClose}
+                            isOpen={this.state.modalIsOpen}
+                            alternative={this.state.alternativeSelected}
+                            product={this.state.productSelected}
+                        />
+                    }
 
                 </Container>
             )
