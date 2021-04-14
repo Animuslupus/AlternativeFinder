@@ -30,9 +30,8 @@ class App extends React.Component {
     }
 
 
-    loadProducts() {
-        fetchProducts().then((result) => {
-
+    loadProducts(lng) {
+        fetchProducts(lng).then((result) => {
             this.setState({
                 products: result
             });
@@ -47,7 +46,9 @@ class App extends React.Component {
             lng='en'
         }
 
-        i18n.changeLanguage(lng);
+        i18n.changeLanguage(lng).then(
+            this.loadProducts(lng)
+        );
 
         this.setState({
             language: lng
@@ -75,7 +76,7 @@ class App extends React.Component {
     componentDidMount() {
         pushEvent('UserJoin');
 
-        this.loadProducts();
+        // this.loadProducts();
     }
 
     render() {
