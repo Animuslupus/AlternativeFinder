@@ -21,6 +21,7 @@ async function fetchProducts(lng) {
                     ...alt,
                     name: alt['name' + suf],
                     category: alt['category' + suf],
+                    description: alt['description' + suf],
                 })
             })
         }
