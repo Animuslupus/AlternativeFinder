@@ -1,6 +1,8 @@
 import React from 'react';
+import '../index.css';
 
-import {Container, Grid, Search, Label} from 'semantic-ui-react'
+
+import {Container, Image, Search, Label} from 'semantic-ui-react'
 
 class SearchBar extends React.Component {
 
@@ -17,12 +19,11 @@ class SearchBar extends React.Component {
     componentWillReceiveProps(nextProps, nextContext) {
         this.setState({
             products: nextProps.products,
-            results: nextProps.products[1]
         });
     }
 
     handleSearchChange = (e, {value}) => {
-        this.setState({value: value, loading:true});
+        this.setState({value: value, loading: true});
         setTimeout(() => {
 
             const re = new RegExp(this.state.value, 'i');
@@ -32,35 +33,44 @@ class SearchBar extends React.Component {
 
             this.setState({
                 results: filteredProducts,
-                loading:false
+                loading: false
             })
         }, 300)
 
     };
 
     resultRenderer = (x) => {
-        return(
-            <Label>{x.nameGerman}</Label>
+        return (
+            <div>
+                <Label>
+                    {x.nameGerman}
+                    <img src={x.imageLink}/>
+                </Label>
+            </div>
+
         )
     };
 
     render() {
         return (
-            <Container>
-                <Grid>
-                    <Grid.Column width={6}>
-                        <Search
-                            loading={this.state.loading}
-                            onResultSelect={(e, data) =>
-                            {this.props.onProductSelection(data.result)}
-                            }
-                            resultRenderer={this.resultRenderer}
-                            onSearchChange={this.handleSearchChange}
-                            results={this.state.results}
-                            value={this.state.value}
-                        />
-                    </Grid.Column>
-                </Grid> </Container>
+            <Container style={{backgroundColor: '#1a531b', margin: '2em', padding: '2em'}}>
+
+                <Search
+                    loading={this.state.loading}
+                    onResultSelect={(e, data) => {
+                        this.setState({
+                            value:data.result.nameGerman
+                        });
+                        this.props.onProductSelection(data.result)
+                    }
+                    }
+                    resultRenderer={this.resultRenderer}
+                    onSearchChange={this.handleSearchChange}
+                    results={this.state.results}
+                    value={this.state.value}
+                />
+
+            </Container>
         )
     }
 }
