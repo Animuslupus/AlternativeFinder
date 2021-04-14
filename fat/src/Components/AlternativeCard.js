@@ -18,6 +18,7 @@ class AlternativeCard extends React.Component {
                         <Grid columns={3} verticalAlign='middle'>
                             <Grid.Column>
                                 <Image
+                                    style={{ maxHeight: 50, width: 'auto' }}
                                     size='small'
                                     src={this.props.product['imageLink']}
                                 />
@@ -27,6 +28,7 @@ class AlternativeCard extends React.Component {
                             </Grid.Column>
                             <Grid.Column>
                                 <Image
+                                    style={{ height: 60, width: 'auto' }}
                                     size='small'
                                     src={this.props.alternative['imageLink']}
                                 />

@@ -7,20 +7,31 @@ class AlternativeList extends React.Component {
 
     // this.props.products
 
-    render_alternative(product) {
-        return product['alternatives'].map(alt => <Grid.Column key={alt['id']}><AlternativeCard onClick={this.props.callback} product={product} alternative={alt} /></Grid.Column>)
+    renderAlternative(product, alt) {
+        return <Grid.Column key={alt['id'].toString() + product['id'].toString()}><AlternativeCard onClick={this.props.callback} product={product} alternative={alt} /></Grid.Column>
     }
 
-    render() {
-        if (this.props.products && this.props.products.length > 0 && this.props.products[0])
-            return (
-                <Grid doubling centered columns={4}>
-                    {this.props.products.map(p => this.render_alternative(p))}
-                </Grid>
-            )
+    getAlternatives(product) {
+        if (this.props.shallow)
+            return this.renderAlternative(product, product['alternatives'][0]) 
         else
-            return <></>
+            return product['alternatives'].map(alt =>this.renderAlternative(product, alt)) 
     }
+
+render() {
+    if (this.props.products && this.props.products.length > 0 && this.props.products[0])
+        return (
+            <Grid doubling stretched stackable centered columns={4}>
+                {this.props.products.map(p => this.getAlternatives(p))}
+            </Grid>
+        )
+    else
+        return <></>
+}
+}
+
+AlternativeList.defaultProps = {
+    shallow: false
 }
 
 export default AlternativeList

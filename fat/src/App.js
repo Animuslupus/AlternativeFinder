@@ -11,7 +11,7 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
-import { pushEvent, fetchProducts } from './helper';
+import { pushEvent, fetchProducts, shuffle } from './helper';
 
 class App extends React.Component {
 
@@ -77,35 +77,50 @@ class App extends React.Component {
         this.setState({ modalIsOpen: false })
     }
 
+    randomProducts() {
+        if (!this.state.products)
+            return null
+        else {
+            var indexArray = [...Array(this.state.products.length).keys()]
+            indexArray = shuffle(indexArray)
+            var randomArray = []
+            for (var i = 0; i < 8; i++) {
+                randomArray.push(this.state.products[indexArray[i]])
+            }
+            return randomArray
+        }
+    }
+
     render() {
         if (this.state.loading)
             return (<Loader />)
-        else
+        else{
             return (
                 <Container textAlign="center" >
                     <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', height: 200, marginBottom: '1em' }}>
                         <Header inverted>
-                            <Trans>
-                                Welcome
-                        </Trans>
+                            <Trans>Welcome</Trans>
                         </Header>
                         <SearchBar
                             products={this.state.products}
                             onProductSelection={(product) => { this.setState({ productSelected: product }) }}
                         />
                     </Container>
-                    <AlternativeList products={[this.state.productSelected]} callback={this.onCardClick} />
-                    {
-                        <AlternativeDetails
-                            onClose={this.onModalClose}
-                            isOpen={this.state.modalIsOpen}
-                            alternative={this.state.alternativeSelected}
-                            product={this.state.productSelected}
-                        />
-                    }
+                    <AlternativeList
+                        shallow={!this.state.productSelected}
+                        products={this.state.productSelected ? [this.state.productSelected] : this.randomProducts()}
+                        callback={this.onCardClick} />
+
+                    <AlternativeDetails
+                        onClose={this.onModalClose}
+                        isOpen={this.state.modalIsOpen}
+                        alternative={this.state.alternativeSelected}
+                        product={this.state.productSelected}
+                    />
 
                 </Container>
             )
+        }
     }
 }
 

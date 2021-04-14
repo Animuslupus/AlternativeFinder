@@ -70,4 +70,4 @@ function capitalize(string) {
         return string
 }
 
-export { fetchProducts, pushEvent, capitalize };
+export { fetchProducts, pushEvent, capitalize, shuffle };
