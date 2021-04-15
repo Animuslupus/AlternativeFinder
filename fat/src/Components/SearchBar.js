@@ -77,6 +77,7 @@ class SearchBar extends React.Component {
           <Icon name='close'
                 onClick={ ()=>{
                     this.searchSuccessful = false;
+                    this.tmpMaxSearchLength = 0;
                     this.setState({
                         value: '',
                         icon: searchIcon,
