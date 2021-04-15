@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-import { Container, Header, Loader } from 'semantic-ui-react'
-import { Trans } from 'react-i18next';
+import {Container, Header, Loader} from 'semantic-ui-react'
+import {Trans} from 'react-i18next';
 import i18n from './i18n';
 
 import 'semantic-ui-css/semantic.min.css'
@@ -11,7 +11,7 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
-import { pushEvent, fetchProducts, shuffle } from './helper';
+import {pushEvent, fetchProducts, shuffle} from './helper';
 
 class App extends React.Component {
 
@@ -53,7 +53,7 @@ class App extends React.Component {
             this.loadProducts(lng)
         );
 
-        pushEvent('UserJoin', { language: lng });
+        pushEvent('UserJoin', {language: lng});
         this.setState({
             language: lng,
         });
@@ -79,10 +79,12 @@ class App extends React.Component {
 
     onModalClose = () => {
         pushEvent('CloseDetails', {
-            productName: this.state.productSelected['name'], productId: this.state.productSelected['id'],
-            alternativeName: this.state.alternativeSelected['name'], alternativeId: this.state.alternativeSelected['id'],
+            productName: this.state.productSelected['name'],
+            productId: this.state.productSelected['id'],
+            alternativeName: this.state.alternativeSelected['name'],
+            alternativeId: this.state.alternativeSelected['id'],
         });
-        this.setState({ modalIsOpen: false })
+        this.setState({modalIsOpen: false})
     }
 
     randomProducts() {
@@ -100,19 +102,29 @@ class App extends React.Component {
     }
 
     selectProduct = (product) => {
-        pushEvent('searchedProductSelected', {
-            productName: product['name'], productId: product['id'],
-        });
-        this.setState({ productSelected: product })
-    }
+        if (product) {
+            pushEvent('searchedProductSelected', {
+                productName: product['name'], productId: product['id'],
+            });
+            this.setState({productSelected: product})
+        }
+        else{
+            this.setState({productSelected: null})
+        }
+    };
 
     render() {
         if (this.state.loading)
-            return (<Loader />)
+            return (<Loader/>)
         else {
             return (
-                <Container textAlign="center" >
-                    <Container fluid style={{ backgroundColor: '#1a531b', paddingTop: '1em', height: 200, marginBottom: '1em' }}>
+                <Container textAlign="center">
+                    <Container fluid style={{
+                        backgroundColor: '#1a531b',
+                        paddingTop: '1em',
+                        height: 200,
+                        marginBottom: '1em'
+                    }}>
                         <Header inverted>
                             <Trans>Welcome</Trans>
                         </Header>
@@ -124,7 +136,7 @@ class App extends React.Component {
                     <AlternativeList
                         shallow={!this.state.productSelected}
                         products={this.state.productSelected ? [this.state.productSelected] : this.randomProducts()}
-                        callback={this.onCardClick} />
+                        callback={this.onCardClick}/>
 
                     <AlternativeDetails
                         onClose={this.onModalClose}

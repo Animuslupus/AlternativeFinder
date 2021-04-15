@@ -1,8 +1,14 @@
 import React from 'react';
 import '../index.css';
 
-import { Container, Image, Search, Label } from 'semantic-ui-react'
+import { Container, Search, Label } from 'semantic-ui-react'
 import { pushEvent } from '../helper';
+import Button from "semantic-ui-react/dist/commonjs/elements/Button";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+
+const searchIcon={
+    icon: 'search'
+};
 
 class SearchBar extends React.Component {
 
@@ -13,6 +19,7 @@ class SearchBar extends React.Component {
             value: '',
             loading: false,
             products: props.products,
+            icon: searchIcon,
         };
         this.tmpMaxSearchLength = 0;
         this.searchSuccessful = false
@@ -26,14 +33,14 @@ class SearchBar extends React.Component {
     }
 
     handleSearchChange = (e, { value }) => {
-        if (value.length == this.tmpMaxSearchLength - 1 && !this.searchSuccessful)
+        if (value.length === this.tmpMaxSearchLength - 1 && !this.searchSuccessful)
             pushEvent('FailedSearch', {
                 searchQuery: value
             });
         else if (value.length > this.tmpMaxSearchLength)
-            this.tmpMaxSearchLength = value.length
-        else if (value.length == 0){
-            this.tmpMaxSearchLength = 0
+            this.tmpMaxSearchLength = value.length;
+        else if (value.length === 0){
+            this.tmpMaxSearchLength = 0;
             this.searchSuccessful = false
         }
 
@@ -65,6 +72,23 @@ class SearchBar extends React.Component {
         )
     };
 
+    closeIcon ={
+        icon: (
+          <Icon name='close'
+                onClick={ ()=>{
+                    this.searchSuccessful = false;
+                    this.setState({
+                        value: '',
+                        icon: searchIcon,
+                    });
+                    this.props.onProductSelection(undefined)
+                }}
+                link
+          />
+
+        )
+    };
+
     render() {
         return (
             <Container style={{ margin: '2em', padding: '2em' }}>
@@ -72,9 +96,10 @@ class SearchBar extends React.Component {
                 <Search
                     loading={this.state.loading}
                     onResultSelect={(e, data) => {
-                        this.searchSuccessful = true
+                        this.searchSuccessful = true;
                         this.setState({
-                            value: data.result.name
+                            value: data.result.name,
+                            icon: this.closeIcon,
                         });
                         this.props.onProductSelection(data.result)
                     }
@@ -83,6 +108,7 @@ class SearchBar extends React.Component {
                     onSearchChange={this.handleSearchChange}
                     results={this.state.results}
                     value={this.state.value}
+                    input={this.state.icon}
                 />
 
             </Container>
