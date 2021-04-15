@@ -185,8 +185,7 @@ class App extends React.Component {
                     }}>
                         <p style={{ lineHeight: 1 }} ><a href={this.getLinkToLanguageSite()}><Trans>LanguageChange</Trans></a></p>
                         <p style={{ lineHeight: 1 }}>
-                            <a target="blank" href="https://climateers.app/impressum/">Impressum</a> /
-                            <a target="blank" href="https://climateers.app/privacy/">Privacy</a>
+                            <a target="blank" href="https://climateers.app/impressum/">Impressum</a><span> / </span><a target="blank" href="https://climateers.app/privacy/">Privacy</a>  
                         </p>
                         <p style={{ lineHeight: 1 }} >Copyright © 2021, Climateers</p>
                     </div>
