@@ -40,7 +40,7 @@ class AlternativeDetails extends React.Component {
                     open={this.state.isOpen}
                     onClose={this.props.onClose}>
                     <Container>
-                        <Segment style={{ margin: 0 }}>
+                        <Segment style={{ margin: 0, boxShadow: "0px 0px 0px #9E9E9E", border:0 }}>
                             <Grid columns={2} verticalAlign='middle'>
                                 <Grid.Column >
                                     <Image style={{ margin: 'auto', maxHeight: 200, width:'auto' }}
@@ -72,7 +72,7 @@ class AlternativeDetails extends React.Component {
                                 <Icon name="angle double right" style={{ fontSize: '2em' }} color='black' />
                             </Divider>
                         </Segment>
-                        <Container style={{ paddingBottom: '1em', paddingTop: '1em', backgroundColor: '#A9DE1B' }} textAlign='center'>
+                        <Container style={{ paddingBottom: '1em', paddingTop: '1em', backgroundColor: '#A9DE1B',  }} textAlign='center'>
                             <Header style={{ color: '#fff' }} as='h3'>{betterInPercentage}% <Trans>better</Trans></Header>
                         </Container>
                         <Container style={{ paddingLeft: '20%', paddingRight: '20%', paddingBottom: '2em', paddingTop: '1em' }}>
