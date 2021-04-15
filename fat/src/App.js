@@ -128,15 +128,15 @@ class App extends React.Component {
                         marginBottom: '1em'
                     }}>
                         <Image
-                            style={{ margin: 'auto',maxHeight: 50, width:'auto' }}
+                            style={{ margin: 'auto',maxHeight: 50, width:'auto', paddingTop: '1em' }}
                             src={logo}
                             size='small'
                         />
-                        <Header inverted>
+                        <p inverted style={{paddingTop: '1em', color: 'white'}}>
 
                             <Trans>Welcome</Trans>
 
-                        </Header>
+                        </p>
                         <SearchBar
                             products={this.state.products}
                             onProductSelection={this.selectProduct}
