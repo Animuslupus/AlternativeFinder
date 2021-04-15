@@ -1,9 +1,10 @@
 {
   "Welcome": "Finde nachhaltige Alternativen zu deiner <br/>Ernährung mit climateers",
-  "alternative":"Alternative zu",
+  "alternative": "Alternative zu",
   "better": "Umweltfreundlicher",
   "replaces": "ersetzt durch",
-  "LanguageChange": "English",
+  "LanguageChange": "Switch to English",
   "Send Feedback": "Feedback senden",
-  "searchPlaceHolder": "zu ersetzendes Produkt"
+  "searchPlaceHolder": "zu ersetzendes Produkt",
+  "Feedback": "Nehmen Sie kontakt auf"
 }

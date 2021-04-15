@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-import {Container, Header, Loader, Image, Label} from 'semantic-ui-react'
-import {Trans} from 'react-i18next';
+import { Container, Loader, Image, Button, Popup } from 'semantic-ui-react'
+import { Trans } from 'react-i18next';
 import i18n from './i18n';
 
 import 'semantic-ui-css/semantic.min.css'
@@ -11,9 +11,9 @@ import 'semantic-ui-css/semantic.min.css'
 import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
-import {pushEvent, fetchProducts, shuffle} from './helper';
+import { pushEvent, fetchProducts, shuffle } from './helper';
 import logo from "./climateers_logo.png"
-import {appConfig} from "./config.js";
+import { appConfig } from "./config.js";
 
 class App extends React.Component {
 
@@ -26,7 +26,8 @@ class App extends React.Component {
             productSelectedList: null,
             alternativeSelected: null,
             language: 'en',
-            modalIsOpen: false
+            modalIsOpen: false,
+            mainContainerHeight: null,
         };
         window.addEventListener("beforeunload", (e) => {
             pushEvent('UserLeave')
@@ -56,7 +57,7 @@ class App extends React.Component {
             this.loadProducts(lng)
         );
 
-        pushEvent('UserJoin', {language: lng});
+        pushEvent('UserJoin', { language: lng });
         this.setState({
             language: lng,
         });
@@ -87,7 +88,7 @@ class App extends React.Component {
             alternativeName: this.state.alternativeSelected['name'],
             alternativeId: this.state.alternativeSelected['id'],
         });
-        this.setState({modalIsOpen: false})
+        this.setState({ modalIsOpen: false })
     };
 
     randomProducts() {
@@ -109,84 +110,90 @@ class App extends React.Component {
             pushEvent('searchedProductSelected', {
                 productName: product['name'], productId: product['id'],
             });
-            this.setState({productSelectedList: product})
+            this.setState({ productSelectedList: product })
         } else {
-            this.setState({productSelectedList: null})
+            this.setState({ productSelectedList: null })
         }
     };
 
-    getLinkToLanguageSite = ()=>{
-        if(this.state.language === 'en'){
-            if(appConfig.isDev)
-                return "http://"+window.location.host+'/de';
+    getLinkToLanguageSite = () => {
+        if (this.state.language === 'en') {
+            if (appConfig.isDev)
+                return "http://" + window.location.host + '/de';
             else
-                return window.location.host+'/de';
+                return window.location.host + '/de';
         }
-        else if(this.state.language === 'de')
-            if(appConfig.isDev)
-                return "http://"+window.location.host+'/en';
+        else if (this.state.language === 'de')
+            if (appConfig.isDev)
+                return "http://" + window.location.host + '/en';
             else
-                return window.location.host+'/en';
+                return window.location.host + '/en';
 
     };
 
     render() {
         if (this.state.loading)
-            return (<Loader/>);
+            return (<Loader />);
         else {
             return (
-                <Container textAlign="center" style={{width: '100%', marginLeft: 0, marginRight: 0}}>
-                    <Container fluid style={{
-                        backgroundColor: '#A9DE1B',
-                        paddingTop: '1em',
-                        height: 200,
-                        marginBottom: '1em'
+                <>
+                    <Container id='mainContainer' textAlign="center" style={{ width: '100%', marginLeft: 0, marginRight: 0, height: '100%' }}>
+                        <Container fluid style={{
+                            backgroundColor: '#A9DE1B',
+                            paddingTop: '1em',
+                            height: 200,
+                            marginBottom: '1em'
+                        }}>
+                            <Image
+                                style={{ margin: 'auto', maxHeight: 50, width: 'auto', paddingTop: '1em' }}
+                                src={logo}
+                                size='small'
+                            />
+                            <p style={{ paddingTop: '1em', color: 'white' }}>
+
+                                <Trans>Welcome</Trans>
+
+                            </p>
+                            <SearchBar
+                                products={this.state.products}
+                                onProductSelection={this.selectProduct}
+                            />
+                        </Container>
+                        <AlternativeList
+                            shallow={!this.state.productSelectedList}
+                            products={this.state.productSelectedList ? [this.state.productSelectedList] : this.randomProducts()}
+                            callback={this.onCardClick} />
+
+                        <AlternativeDetails
+                            onClose={this.onModalClose}
+                            isOpen={this.state.modalIsOpen}
+                            alternative={this.state.alternativeSelected}
+                            product={this.state.productSelectedDetails}
+                        />
+                    </Container >
+                    <div style={{
+                        marginTop: '1rem',
+                        padding: '1rem',
+                        backgroundColor: "#222",
+                        position: window.innerHeight > 850 ? 'fixed' : 'relative',
+                        bottom: 0,
+                        left: 0,
+                        width: '100%',
+                        color: '#fff',
+                        textAlign: 'center'
                     }}>
-                        <Image
-                            style={{margin: 'auto', maxHeight: 50, width: 'auto', paddingTop: '1em'}}
-                            src={logo}
-                            size='small'
-                        />
-                        <p style={{paddingTop: '1em', color: 'white'}}>
-
-                            <Trans>Welcome</Trans>
-
+                        <p style={{ lineHeight: 1 }} ><a href={this.getLinkToLanguageSite()}><Trans>LanguageChange</Trans></a></p>
+                        <p style={{ lineHeight: 1 }}>
+                            <a target="blank" href="https://climateers.app/impressum/">Impressum</a> /
+                            <a target="blank" href="https://climateers.app/privacy/">Privacy</a>
                         </p>
-                        <SearchBar
-                            products={this.state.products}
-                            onProductSelection={this.selectProduct}
-                        />
-                    </Container>
-                    <AlternativeList
-                        shallow={!this.state.productSelectedList}
-                        products={this.state.productSelectedList ? [this.state.productSelectedList] : this.randomProducts()}
-                        callback={this.onCardClick}/>
+                        <p style={{ lineHeight: 1 }} >Copyright © 2021, Climateers</p>
+                    </div>
+                    <Popup content={i18n.t('Feedback')} trigger={
+                        <Button floated='right' size="huge" circular style={{ position: 'fixed', bottom: 30, right: 0, textAlign: 'center', margin: '1em', color: '#FFF', backgroundColor: "#A9DE1B" }} icon="question circle outline" />
+                    } />
+                </>
 
-                    <AlternativeDetails
-                        onClose={this.onModalClose}
-                        isOpen={this.state.modalIsOpen}
-                        alternative={this.state.alternativeSelected}
-                        product={this.state.productSelectedDetails}
-                    />
-                    <Label style={{backgroundColor: '#0B5E53', color: 'white', margin: '1em', padding: '1em'}}
-                            as='a'
-                           href={this.getLinkToLanguageSite()}
-                    >
-                            <Trans>
-                                LanguageChange
-                            </Trans>
-                    </Label>
-
-                    <Label style={{backgroundColor: '#0B5E53', color: 'white', margin: '1em', padding: '1em'}}
-                           as='a'
-                           href={'mailto: nick@climateers.app'}
-                    >
-                            <Trans>
-                                Send Feedback
-                            </Trans>
-                    </Label>
-
-                </Container>
             )
         }
     }
