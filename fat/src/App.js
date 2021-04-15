@@ -135,6 +135,7 @@ class App extends React.Component {
         if (this.state.loading)
             return (<Loader />);
         else {
+            const fixFooter = window.innerHeight > 850;
             return (
                 <>
                     <Container id='mainContainer' textAlign="center" style={{ width: '100%', marginLeft: 0, marginRight: 0, height: '100%' }}>
@@ -175,7 +176,7 @@ class App extends React.Component {
                         marginTop: '1rem',
                         padding: '1rem',
                         backgroundColor: "#222",
-                        position: window.innerHeight > 850 ? 'fixed' : 'relative',
+                        position: fixFooter ? 'fixed' : 'relative',
                         bottom: 0,
                         left: 0,
                         width: '100%',
@@ -190,7 +191,7 @@ class App extends React.Component {
                         <p style={{ lineHeight: 1 }} >Copyright © 2021, Climateers</p>
                     </div>
                     <Popup content={i18n.t('Feedback')} trigger={
-                        <Button floated='right' size="huge" circular style={{ position: 'fixed', bottom: 30, right: 0, textAlign: 'center', margin: '1em', color: '#FFF', backgroundColor: "#A9DE1B" }} icon="question circle outline" />
+                        <Button as="a" href="mailto:nick@climateers.app" floated='right' size="huge" circular style={{ position: 'fixed', bottom: fixFooter ? 90 : 30, right: fixFooter? 10: 0, textAlign: 'center', margin: '1em', color: '#FFF', backgroundColor: "#A9DE1B" }} icon="question circle outline" />
                     } />
                 </>
 
