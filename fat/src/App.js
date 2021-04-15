@@ -120,7 +120,7 @@ class App extends React.Component {
             return (<Loader/>);
         else {
             return (
-                <Container textAlign="center" style={{width: '100%'}}>
+                <Container textAlign="center" style={{width: '100%', marginLeft:0, marginRight:0}}>
                     <Container fluid style={{
                         backgroundColor: '#A9DE1B',
                         paddingTop: '1em',
