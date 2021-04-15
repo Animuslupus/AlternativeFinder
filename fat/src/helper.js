@@ -1,8 +1,11 @@
 import { appConfig, eventDB, firebase } from './config'
 import publicIp from "public-ip"
 import cookie from 'react-cookies'
+import { deviceDetect } from 'react-device-detect'
 
 const userId = cookie.load('userId');
+const deviceInfo = deviceDetect()
+
 
 async function fetchProducts(lng) {
     const ip = appConfig.isDev ? appConfig.devApiIp : appConfig.productionApiIp;
@@ -37,6 +40,7 @@ async function pushEvent(eventType, params = {}) {
         type: eventType,
         userId: userId ? userId : '',
         ipAddress: ip,
+        deviceInfo: deviceInfo,
         createdAt: firebase.firestore.Timestamp.now(),
         params: params
     }
