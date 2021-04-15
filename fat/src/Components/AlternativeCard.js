@@ -13,7 +13,7 @@ class AlternativeCard extends React.Component {
     render() {
         const betterInPercentage = Math.round(((this.props.product['emissions'] - this.props.alternative['emissions']) / this.props.product['emissions']) * 100)
         return (
-            <Card onClick={() => { this.props.onClick(this.props.product, this.props.alternative) }}>
+            <Card centered onClick={() => { this.props.onClick(this.props.product, this.props.alternative) }}>
                 <Card style={{ marginBottom: '0' }}>
                     <Card.Content>
                         <Grid columns={3} verticalAlign='middle'>
@@ -29,7 +29,7 @@ class AlternativeCard extends React.Component {
                             </Grid.Column>
                             <Grid.Column>
                                 <Image
-                                    style={{ height: 60, width: 'auto' }}
+                                    style={{ maxHeight: 60, width: 'auto' }}
                                     size='small'
                                     src={this.props.alternative['imageLink']}
                                 />
