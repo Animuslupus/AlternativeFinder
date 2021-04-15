@@ -21,7 +21,7 @@ class AlternativeList extends React.Component {
 render() {
     if (this.props.products && this.props.products.length > 0 && this.props.products[0])
         return (
-            <Grid stackable doubling columns={4} style={{padding:'5%'}}>
+            <Grid stackable doubling columns={4} style={{paddingLeft:'5%', paddingRight:'5%', paddingTop:'5%', paddingBottom: '2%'}}>
                 {this.props.products.map(p => this.getAlternatives(p))}
             </Grid>
         )

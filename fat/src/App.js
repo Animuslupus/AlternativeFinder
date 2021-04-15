@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import {Container, Header, Loader, Image} from 'semantic-ui-react'
+import {Container, Header, Loader, Image, Label} from 'semantic-ui-react'
 import {Trans} from 'react-i18next';
 import i18n from './i18n';
 
@@ -22,7 +22,7 @@ class App extends React.Component {
             products: [],
             loading: true,
             productSelectedDetails: null,
-            productSelectedList:null,
+            productSelectedList: null,
             alternativeSelected: null,
             language: 'en',
             modalIsOpen: false
@@ -109,10 +109,18 @@ class App extends React.Component {
                 productName: product['name'], productId: product['id'],
             });
             this.setState({productSelectedList: product})
-        }
-        else{
+        } else {
             this.setState({productSelectedList: null})
         }
+    };
+
+    getLinkToLanguageSite = ()=>{
+        console.log(window.location.host);
+        if(this.state.language === 'en')
+            return window.location.host+'de';
+        else if(this.state.language === 'de')
+            return window.location.host+'/en';
+
     };
 
     render() {
@@ -120,7 +128,7 @@ class App extends React.Component {
             return (<Loader/>);
         else {
             return (
-                <Container textAlign="center" style={{width: '100%', marginLeft:0, marginRight:0}}>
+                <Container textAlign="center" style={{width: '100%', marginLeft: 0, marginRight: 0}}>
                     <Container fluid style={{
                         backgroundColor: '#A9DE1B',
                         paddingTop: '1em',
@@ -128,11 +136,11 @@ class App extends React.Component {
                         marginBottom: '1em'
                     }}>
                         <Image
-                            style={{ margin: 'auto',maxHeight: 50, width:'auto', paddingTop: '1em' }}
+                            style={{margin: 'auto', maxHeight: 50, width: 'auto', paddingTop: '1em'}}
                             src={logo}
                             size='small'
                         />
-                        <p inverted style={{paddingTop: '1em', color: 'white'}}>
+                        <p style={{paddingTop: '1em', color: 'white'}}>
 
                             <Trans>Welcome</Trans>
 
@@ -153,6 +161,23 @@ class App extends React.Component {
                         alternative={this.state.alternativeSelected}
                         product={this.state.productSelectedDetails}
                     />
+                    <Label style={{backgroundColor: '#0B5E53', color: 'white', margin: '1em', padding: '1em'}}
+                            as='a'
+                           href={this.getLinkToLanguageSite()}
+                    >
+                            <Trans>
+                                LanguageChange
+                            </Trans>
+                    </Label>
+
+                    <Label style={{backgroundColor: '#0B5E53', color: 'white', margin: '1em', padding: '1em'}}
+                           as='a'
+                           href={'mailto: nick@climateers.app'}
+                    >
+                            <Trans>
+                                Send Feedback
+                            </Trans>
+                    </Label>
 
                 </Container>
             )
