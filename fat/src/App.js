@@ -20,7 +20,8 @@ class App extends React.Component {
         this.state = {
             products: [],
             loading: true,
-            productSelected: null,
+            productSelectedDetails: null,
+            productSelectedList:null,
             alternativeSelected: null,
             language: 'en',
             modalIsOpen: false
@@ -68,32 +69,32 @@ class App extends React.Component {
         pushEvent('ViewDetails', {
             productName: product['name'], productId: product['id'],
             alternativeName: alternative['name'], alternativeId: alternative['id'],
-            wasRecommended: !this.state.productSelected
+            wasRecommended: !this.state.productSelectedList
         });
         this.setState({
             modalIsOpen: true,
-            productSelected: product,
+            productSelectedDetails: product,
             alternativeSelected: alternative
         })
-    }
+    };
 
     onModalClose = () => {
         pushEvent('CloseDetails', {
-            productName: this.state.productSelected['name'],
-            productId: this.state.productSelected['id'],
+            productName: this.state.productSelectedDetails['name'],
+            productId: this.state.productSelectedDetails['id'],
             alternativeName: this.state.alternativeSelected['name'],
             alternativeId: this.state.alternativeSelected['id'],
         });
         this.setState({modalIsOpen: false})
-    }
+    };
 
     randomProducts() {
         if (!this.state.products)
-            return null
+            return null;
         else {
-            var indexArray = [...Array(this.state.products.length).keys()]
-            indexArray = shuffle(indexArray)
-            var randomArray = []
+            var indexArray = [...Array(this.state.products.length).keys()];
+            indexArray = shuffle(indexArray);
+            var randomArray = [];
             for (var i = 0; i < 8; i++) {
                 randomArray.push(this.state.products[indexArray[i]])
             }
@@ -106,16 +107,16 @@ class App extends React.Component {
             pushEvent('searchedProductSelected', {
                 productName: product['name'], productId: product['id'],
             });
-            this.setState({productSelected: product})
+            this.setState({productSelectedList: product})
         }
         else{
-            this.setState({productSelected: null})
+            this.setState({productSelectedList: null})
         }
     };
 
     render() {
         if (this.state.loading)
-            return (<Loader/>)
+            return (<Loader/>);
         else {
             return (
                 <Container textAlign="center">
@@ -134,15 +135,15 @@ class App extends React.Component {
                         />
                     </Container>
                     <AlternativeList
-                        shallow={!this.state.productSelected}
-                        products={this.state.productSelected ? [this.state.productSelected] : this.randomProducts()}
+                        shallow={!this.state.productSelectedList}
+                        products={this.state.productSelectedList ? [this.state.productSelectedList] : this.randomProducts()}
                         callback={this.onCardClick}/>
 
                     <AlternativeDetails
                         onClose={this.onModalClose}
                         isOpen={this.state.modalIsOpen}
                         alternative={this.state.alternativeSelected}
-                        product={this.state.productSelected}
+                        product={this.state.productSelectedDetails}
                     />
 
                 </Container>
