@@ -121,13 +121,13 @@ class App extends React.Component {
             if (appConfig.isDev)
                 return "http://" + window.location.host + '/de';
             else
-                return window.location.host + '/de';
+                return 'https://alternatives.climateers.app/de';
         }
         else if (this.state.language === 'de')
             if (appConfig.isDev)
                 return "http://" + window.location.host + '/en';
             else
-                return window.location.host + '/en';
+                return 'https://alternatives.climateers.app/en';
 
     };
 
