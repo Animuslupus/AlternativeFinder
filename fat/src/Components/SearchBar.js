@@ -3,12 +3,13 @@ import '../index.css';
 
 import { Container, Search, Label } from 'semantic-ui-react'
 import { pushEvent } from '../helper';
-import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import i18n from '../i18n';
 
 const searchIcon={
     icon: 'search'
 };
+
 
 class SearchBar extends React.Component {
 
@@ -24,6 +25,7 @@ class SearchBar extends React.Component {
         this.tmpMaxSearchLength = 0;
         this.searchSuccessful = false
     }
+
 
     componentWillReceiveProps(nextProps, nextContext) {
         this.setState({
@@ -105,6 +107,7 @@ class SearchBar extends React.Component {
                         this.props.onProductSelection(data.result)
                     }
                     }
+                    placeholder={i18n.t('searchPlaceHolder')}
                     resultRenderer={this.resultRenderer}
                     onSearchChange={this.handleSearchChange}
                     results={this.state.results}

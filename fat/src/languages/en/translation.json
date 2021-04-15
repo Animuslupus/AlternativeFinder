@@ -1,8 +1,10 @@
 {
-  "Welcome": "Find sustainable alternatives to your <br/> favorite products on climateers",
+
+  "Welcome": "Find sustainable alternatives to your favorite food with climateers",
   "alternative":"alternative to",
   "better": "more sustainable",
   "replaces": "replaced by",
   "LanguageChange": "Deutsch",
-  "Send Feedback": "Send Feedback"
+  "Send Feedback": "Send Feedback",
+  "searchPlaceHolder": "product to substitute"
 }

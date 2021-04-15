@@ -13,6 +13,7 @@ import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
 import {pushEvent, fetchProducts, shuffle} from './helper';
 import logo from "./climateers_logo.png"
+import {appConfig} from "./config.js";
 
 class App extends React.Component {
 
@@ -115,11 +116,17 @@ class App extends React.Component {
     };
 
     getLinkToLanguageSite = ()=>{
-        console.log(window.location.host);
-        if(this.state.language === 'en')
-            return window.location.host+'de';
+        if(this.state.language === 'en'){
+            if(appConfig.isDev)
+                return "http://"+window.location.host+'/de';
+            else
+                return window.location.host+'/de';
+        }
         else if(this.state.language === 'de')
-            return window.location.host+'/en';
+            if(appConfig.isDev)
+                return "http://"+window.location.host+'/en';
+            else
+                return window.location.host+'/en';
 
     };
 
