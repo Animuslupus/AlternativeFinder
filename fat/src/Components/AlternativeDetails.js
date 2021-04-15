@@ -72,11 +72,11 @@ class AlternativeDetails extends React.Component {
                                 <Icon name="angle double right" style={{ fontSize: '2em' }} color='black' />
                             </Divider>
                         </Segment>
-                        <Container style={{ paddingBottom: '1em', paddingTop: '1em', backgroundColor: '#1a531b' }} textAlign='center'>
+                        <Container style={{ paddingBottom: '1em', paddingTop: '1em', backgroundColor: '#A9DE1B' }} textAlign='center'>
                             <Header style={{ color: '#fff' }} as='h3'>{betterInPercentage}% <Trans>better</Trans></Header>
                         </Container>
                         <Container style={{ paddingLeft: '20%', paddingRight: '20%', paddingBottom: '2em', paddingTop: '1em' }}>
-                            <Header style={{ color: '#1a531b' }} as='h2'>{capitalize(this.state.product.name)} <Trans>replaces</Trans> {capitalize(this.state.alternative.name)}</Header>
+                            <Header style={{ color: '#A9DE1B' }} as='h2'>{capitalize(this.state.product.name)} <Trans>replaces</Trans> {capitalize(this.state.alternative.name)}</Header>
                             <p>
                                 <MarkdownRenderer markdown={this.state.alternative.description} />
                             </p>

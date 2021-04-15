@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import {Container, Header, Loader} from 'semantic-ui-react'
+import {Container, Header, Loader, Image} from 'semantic-ui-react'
 import {Trans} from 'react-i18next';
 import i18n from './i18n';
 
@@ -12,6 +12,7 @@ import AlternativeList from "./Components/AlternativeList";
 import SearchBar from "./Components/SearchBar";
 import AlternativeDetails from "./Components/AlternativeDetails";
 import {pushEvent, fetchProducts, shuffle} from './helper';
+import logo from "./climateers_logo.png"
 
 class App extends React.Component {
 
@@ -119,15 +120,22 @@ class App extends React.Component {
             return (<Loader/>);
         else {
             return (
-                <Container textAlign="center">
+                <Container textAlign="center" style={{width: '100%'}}>
                     <Container fluid style={{
-                        backgroundColor: '#1a531b',
+                        backgroundColor: '#A9DE1B',
                         paddingTop: '1em',
                         height: 200,
                         marginBottom: '1em'
                     }}>
+                        <Image
+                            style={{ margin: 'auto',maxHeight: 50, width:'auto' }}
+                            src={logo}
+                            size='small'
+                        />
                         <Header inverted>
+
                             <Trans>Welcome</Trans>
+
                         </Header>
                         <SearchBar
                             products={this.state.products}

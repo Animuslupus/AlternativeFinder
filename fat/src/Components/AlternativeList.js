@@ -21,7 +21,7 @@ class AlternativeList extends React.Component {
 render() {
     if (this.props.products && this.props.products.length > 0 && this.props.products[0])
         return (
-            <Grid doubling stretched centered columns={4}>
+            <Grid doubling stretched centered columns={4} style={{padding:'5%'}}>
                 {this.props.products.map(p => this.getAlternatives(p))}
             </Grid>
         )
