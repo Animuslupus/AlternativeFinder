@@ -35,6 +35,7 @@ class AlternativeDetails extends React.Component {
             const betterInPercentage = Math.round(((this.props.product['emissions'] - this.props.alternative['emissions']) / this.props.product['emissions']) * 100)
             return (
                 <Modal
+                    closeIcon
                     centered={false}
                     open={this.state.isOpen}
                     onClose={this.props.onClose}>
