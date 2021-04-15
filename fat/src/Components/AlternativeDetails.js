@@ -51,7 +51,6 @@ class AlternativeDetails extends React.Component {
                                 <Grid.Column>
                                     <Image style={{ margin: 'auto',maxHeight: 200, width:'auto' }}
                                         size='small'
-                                        src={this.state.product.imageLink}
                                         src={this.state.alternative.imageLink}
                                     />
                                 </Grid.Column>

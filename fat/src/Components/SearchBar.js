@@ -67,7 +67,7 @@ class SearchBar extends React.Component {
             <div>
                 <Label>
                     {x.name}
-                    <img src={x.imageLink} />
+                    <img alt={x.name} src={x.imageLink} />
                 </Label>
             </div>
 
